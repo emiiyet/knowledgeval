@@ -77,7 +77,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); backgro
 .btn:hover { background: var(--surface2); }
 .btn:active { transform: scale(.98); }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
-.btn-primary { background: #16a34a; color: #fff; border-color: var(--accent); }
+.btn-primary { background: #16a34a; color: #fff; border-color: #16a34a; }
 .btn-primary:hover { background: #16a34a; }
 .btn-full { width: 100%; justify-content: center; }
 
