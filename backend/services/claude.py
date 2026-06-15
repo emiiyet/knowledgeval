@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
+
+
 def extraire_connaissances(pdf_bytes: bytes) -> list[dict]:
     pdf_base64 = base64.standard_b64encode(pdf_bytes).decode("utf-8")
     prompt = """Analyse ce document et extrait exactement 4 à 6 connaissances stratégiques
