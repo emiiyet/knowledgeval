@@ -96,22 +96,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); backgro
 /* ── KNOWLEDGE CARDS ─────────────────────────────────────────── */
 .k-card {
   background: #E6FFF1;   /* vert très clair */
-  border: 1px solid #CCFCE3;
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-color: #CCFCE3; /* bordure douce */
 }
 .k-card-num {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #CCFCE3;   /* vert clair */
-  color: #16a34a;        /* vert foncé */
-  font-family: var(--font-d);
-  font-weight: 700;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #CCFCE3;  /* vert clair */
+  color: #16a34a;      /* vert plus foncé */
 }
 .k-card-info { flex: 1; min-width: 0; }
 .k-card-info strong { font-size: 14px; font-weight: 500; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
