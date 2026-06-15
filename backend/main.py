@@ -29,7 +29,7 @@ app.include_router(protections_router, prefix="/api/protections", tags=["Protect
 
 # Servir le frontend
 frontend_path = os.path.join(os.path.dirname(__file__), "../frontend")
-app.mount("/static", StaticFiles(directory=os.path.join(frontend_path, "css")), name="css")
+app.mount("/css", StaticFiles(directory=os.path.join(frontend_path, "css")), name="css")
 app.mount("/js", StaticFiles(directory=os.path.join(frontend_path, "js")), name="js")
 
 @app.get("/")
