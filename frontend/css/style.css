@@ -34,7 +34,7 @@ nav {
   border-bottom: 1px solid var(--border);
   padding: 0 2rem; display: flex; align-items: center; gap: 2rem; height: 56px;
 }
-.nav-brand { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.nav-brand { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: #16a34a; text-decoration: none; display: flex; align-items: center; gap: 8px; }
 .nav-brand span { color: var(--accent); }
 .nav-links { display: flex; gap: 4px; }
 .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border-radius: var(--rs); transition: background .15s, color .15s; cursor: pointer; }
@@ -42,12 +42,12 @@ nav {
 
 /* ── HERO ─────────────────────────────────────────────────────── */
 .hero { padding: 3.5rem 2rem 2.5rem; max-width: 900px; margin: 0 auto; }
-.hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border-radius: 20px; padding: 4px 12px; margin-bottom: 1.25rem; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: #16a34a; background: var(--accent-light); border-radius: 20px; padding: 4px 12px; margin-bottom: 1.25rem; }
 .hero h1 { font-family: var(--font-d); font-size: clamp(26px, 5vw, 42px); font-weight: 700; line-height: 1.15; margin-bottom: .75rem; }
 .hero p { font-size: 15px; color: var(--text-muted); max-width: 540px; margin-bottom: 1.5rem; }
 .hero-steps { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
 .hero-step { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
-.hero-step .dot { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.hero-step .dot { width: 28px; height: 28px; border-radius: 50%; background: #16a34a; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .hero-arrow { color: var(--border); font-size: 18px; margin: 0 10px; }
 
 /* ── MAIN ─────────────────────────────────────────────────────── */
