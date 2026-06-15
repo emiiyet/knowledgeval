@@ -76,16 +76,13 @@ async function handleExtract() {
   try {
     const data = await extractFromPDF(file);
     extracted = data.connaissances;
-  } catch (err) {
+  } } catch (err) {
+    clearInterval(iv);
+    hide("st-loading");
+    show("file-info");
     toast("Erreur extraction : " + err.message);
-    // Données de démo si le backend n'est pas disponible
-    extracted = [
-      { titre: "Algorithme de détection d'anomalies", description: "Méthode automatique d'identification d'anomalies dans des flux temps réel.", type: "logiciel", domaine: "IA / Industrie" },
-      { titre: "Modèle de classification sémantique", description: "Classification de documents par apprentissage automatique.", type: "logiciel", domaine: "IA / NLP" },
-      { titre: "Protocole d'optimisation énergétique", description: "Procédé de réduction de consommation dans les systèmes distribués.", type: "invention", domaine: "Énergie" },
-      { titre: "Base de connaissances médicales", description: "Règles et données diagnostiques pour l'aide à la décision médicale.", type: "base", domaine: "Santé" },
-    ];
-  } finally {
+    return; // ← stopper ici, ne pas continuer avec des données fictives
+} finally {
     clearInterval(iv);
   }
 
