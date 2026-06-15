@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KnowledgeVal — Valorisation des Connaissances</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- ── NAVIGATION ──────────────────────────────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-brand">⬡ <span>KnowledgeVal</span></a>
+  <div class="nav-links">
+    <a id="nav-p1" class="active" onclick="showPage('p1')">① Évaluation</a>
+    <a id="nav-p2" onclick="showPage('p2')">② Tableau de bord</a>
+    <a id="nav-p3" onclick="showPage('p3')">③ Protection</a>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">● Système de valorisation des connaissances</div>
+  <h1>Transformez vos connaissances en actifs économiques</h1>
+  <p>Importez un document, extrayez et évaluez les connaissances, suivez-les et protégez les plus précieuses.</p>
+  <div class="hero-steps">
+    <div class="hero-step"><div class="dot">1</div> Import PDF + Évaluation</div>
+    <div class="hero-arrow">→</div>
+    <div class="hero-step"><div class="dot">2</div> Tableau de bord</div>
+    <div class="hero-arrow">→</div>
+    <div class="hero-step"><div class="dot">3</div> Protection juridique</div>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 1 — ÉVALUATION
+══════════════════════════════════════════════════════════════════════ -->
+<div class="page active" id="p1">
+  <div class="section-hdr">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-title">Évaluation économique</div>
+      <div class="section-sub">Import PDF → Extraction IA → Notation → Stockage en base</div>
+    </div>
+  </div>
+
+  <!-- Étape 1 : Upload -->
+  <div id="st-upload">
+    <p style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Étape 1 — Importer un document PDF</p>
+    <div id="drop-zone">
+      <div style="font-size:36px;margin-bottom:10px;">📄</div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:4px;">Glisser-déposer votre PDF ici</div>
+      <div style="font-size:13px;color:var(--text-muted);">ou cliquer pour parcourir</div>
+      <input type="file" id="pdf-input" accept=".pdf" style="display:none">
+    </div>
+    <div id="file-info" style="display:none;margin-top:10px;" class="card">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:24px;">📋</span>
+        <div style="flex:1;">
+          <div style="font-weight:500;font-size:14px;" id="file-name"></div>
+          <div style="font-size:12px;color:var(--text-muted);" id="file-size"></div>
+        </div>
+        <span class="badge badge-success">PDF chargé</span>
+      </div>
+      <button class="btn btn-primary btn-full" id="btn-extract" style="margin-top:1rem;">
+        ✦ Extraire les connaissances avec l'IA
+      </button>
+    </div>
+  </div>
+
+  <!-- Étape 2 : Chargement -->
+  <div id="st-loading" style="display:none;margin-top:1rem;">
+    <p style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Étape 2 — Extraction en cours…</p>
+    <div class="card" style="text-align:center;padding:2rem;">
+      <div class="spinner"></div>
+      <div style="font-size:14px;color:var(--text-muted);" id="loading-msg">Analyse du document PDF…</div>
+    </div>
+  </div>
+
+  <!-- Étape 3 : Connaissances extraites -->
+  <div id="st-extracted" style="display:none;margin-top:1rem;">
+    <p style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Étape 2 — Connaissances extraites</p>
+    <div id="extracted-list" style="margin-bottom:1rem;"></div>
+  </div>
+
+  <!-- Étape 4 : Évaluation -->
+  <div id="st-eval" style="display:none;margin-top:1rem;">
+    <p style="font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Étape 3 — Évaluation multicritère</p>
+    <div class="card" style="margin-bottom:1rem;background:var(--accent-light);border-color:var(--accent);">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">🔍</span>
+        <div>
+          <div style="font-size:12px;color:var(--text-muted);">Connaissance sélectionnée</div>
+          <div style="font-size:15px;font-weight:600;color:var(--accent);" id="eval-kname">—</div>
+          <div style="font-size:12px;color:var(--info);" id="eval-kdesc">—</div>
+        </div>
+      </div>
+    </div>
+    <div id="criteria-grid"></div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:13px;font-weight:500;">Score global</span>
+        <span id="score-txt" style="font-family:var(--font-d);font-size:20px;font-weight:700;">0 / 30</span>
+      </div>
+      <div class="score-bar-wrap"><div class="score-bar" id="score-bar"></div></div>
+      <div class="score-grid">
+        <div class="score-card">
+          <div class="sc-label">Critères notés</div>
+          <div class="sc-value" id="count-val" style="color:var(--accent);">0 / 6</div>
+        </div>
+        <div class="score-card">
+          <div class="sc-label">Décision recommandée</div>
+          <div style="margin-top:8px;" id="interp-badge"><span class="badge badge-info">—</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:1rem;">
+        <button class="btn" id="btn-prev" style="flex:1;" disabled>← Précédente</button>
+        <button class="btn btn-primary" id="btn-next" style="flex:1;">Enregistrer → Suivante</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Étape 5 : Récapitulatif -->
+  <div id="st-recap" style="display:none;margin-top:1.5rem;">
+    <p style="font-size:12px;font-weight:600;color:var(--success);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">✓ Évaluations enregistrées en base</p>
+    <div class="table-wrap" style="margin-bottom:1rem;">
+      <table>
+        <thead><tr><th>Connaissance</th><th>Domaine</th><th>Score</th><th>Décision</th></tr></thead>
+        <tbody id="recap-tbody"></tbody>
+      </table>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn" id="btn-new-doc" style="flex:1;">↺ Nouveau document</button>
+      <button class="btn btn-primary" id="btn-go-dashboard" style="flex:1;">Voir le tableau de bord →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 2 — TABLEAU DE BORD
+══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="p2">
+  <div class="section-hdr">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-title">Tableau de bord de suivi</div>
+      <div class="section-sub">Données chargées depuis Supabase en temps réel</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="k-label">Revenus générés</div><div class="k-value" id="kpi-rev" style="color:var(--success);">—</div></div>
+    <div class="kpi-card"><div class="k-label">Coûts engagés</div><div class="k-value" id="kpi-cost" style="color:var(--danger);">—</div></div>
+    <div class="kpi-card"><div class="k-label">Connaissances</div><div class="k-value" id="kpi-count" style="color:var(--text);">—</div></div>
+    <div class="kpi-card"><div class="k-label">À forte valeur</div><div class="k-value" id="kpi-strong" style="color:var(--accent);">—</div></div>
+  </div>
+
+  <div id="dash-loading" class="card" style="text-align:center;padding:2rem;display:none;">
+    <div class="spinner"></div>
+    <div style="font-size:14px;color:var(--text-muted);">Chargement depuis la base…</div>
+  </div>
+
+  <div id="dash-empty" class="empty-state" style="display:none;">
+    <div class="icon">📊</div>
+    <p>Aucune connaissance évaluée pour l'instant.<br>Importez un PDF dans l'onglet Évaluation.</p>
+    <button class="btn btn-primary" style="margin-top:1rem;" onclick="showPage('p1')">← Aller à l'évaluation</button>
+  </div>
+
+  <div id="dash-table" style="display:none;">
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Connaissance</th><th>Domaine</th><th>Score</th>
+          <th>Revenus est.</th><th>Coûts est.</th><th>Délai</th>
+          <th>Statut juridique</th><th>Maturité</th>
+        </tr></thead>
+        <tbody id="dash-tbody"></tbody>
+      </table>
+    </div>
+    <div style="margin-top:1rem;display:flex;justify-content:flex-end;">
+      <button class="btn btn-primary" onclick="showPage('p3')">Gérer la protection →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PAGE 3 — PROTECTION JURIDIQUE
+══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="p3">
+  <div class="section-hdr">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-title">Protection juridique</div>
+      <div class="section-sub">Sélectionner une connaissance depuis la base et initier la protection</div>
+    </div>
+  </div>
+
+  <div id="prot-empty" class="empty-state" style="display:none;">
+    <div class="icon">🔒</div>
+    <p>Aucune connaissance disponible.<br>Commencez par évaluer un document PDF.</p>
+    <button class="btn btn-primary" style="margin-top:1rem;" onclick="showPage('p1')">← Aller à l'évaluation</button>
+  </div>
+
+  <div id="prot-main" style="display:none;">
+    <!-- Sélection connaissance -->
+    <div class="card fg" style="margin-bottom:1rem;">
+      <label class="lbl">Sélectionner une connaissance à protéger</label>
+      <select id="prot-kb-select">
+        <option value="">-- Choisir depuis la base --</option>
+      </select>
+      <div id="prot-kb-info" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:500;" id="pki-name">—</div>
+            <div style="font-size:12px;color:var(--text-muted);" id="pki-desc">—</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span id="pki-score" class="badge badge-info">—</span>
+            <span id="pki-dec" class="badge badge-info">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prot-grid">
+      <!-- Colonne gauche -->
+      <div>
+        <div class="card fg" style="margin-bottom:1rem;">
+          <div class="fg">
+            <label class="lbl">Type de connaissance</label>
+            <select id="prot-type">
+              <option value="">-- Sélectionner --</option>
+              <option value="invention">Invention technique / procédé</option>
+              <option value="logiciel">Logiciel / algorithme</option>
+              <option value="base">Base de données</option>
+              <option value="marque">Marque / nom commercial</option>
+              <option value="design">Design / interface</option>
+              <option value="secret">Savoir-faire confidentiel</option>
+            </select>
+          </div>
+          <div id="prot-result" class="prot-box">
+            <div class="prot-title" id="prot-title-txt"></div>
+            <div class="prot-desc"  id="prot-desc-txt"></div>
+            <div class="orgs-list"  id="prot-orgs"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:14px;font-weight:500;margin-bottom:1rem;">Suivi de la demande</div>
+          <div class="two-col">
+            <div class="fg"><label class="lbl">Date de dépôt</label><input type="date" id="prot-date"></div>
+            <div class="fg"><label class="lbl">N° de dossier</label><input type="text" id="prot-num" placeholder="FR2025/00123"></div>
+          </div>
+          <div class="fg">
+            <label class="lbl">Statut actuel</label>
+            <select id="prot-status">
+              <option value="0">En préparation</option>
+              <option value="1">Déposé — en attente</option>
+              <option value="2">En cours d'examen</option>
+              <option value="3">Accordé / Enregistré</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-full" id="btn-save-prot">→ Enregistrer la protection</button>
+        </div>
+      </div>
+
+      <!-- Colonne droite -->
+      <div>
+        <div class="card" style="margin-bottom:1rem;">
+          <div style="font-size:14px;font-weight:500;margin-bottom:1.25rem;">Progression de la demande</div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-dot active-dot" id="tl0"></div><div class="tl-label">Préparation du dossier</div><div class="tl-sub">Rédaction de la description technique</div></div>
+            <div class="tl-item"><div class="tl-dot" id="tl1"></div><div class="tl-label">Dépôt auprès de l'organisme</div><div class="tl-sub">INAPI / OEB / OMPI</div></div>
+            <div class="tl-item"><div class="tl-dot" id="tl2"></div><div class="tl-label">Examen et instruction</div><div class="tl-sub">Réponses aux objections</div></div>
+            <div class="tl-item"><div class="tl-dot" id="tl3"></div><div class="tl-label">Délivrance du titre</div><div class="tl-sub">Brevet accordé / Droit enregistré</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:13px;font-weight:500;margin-bottom:10px;">Modes de protection par type</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--text-muted);">Invention technique</span><span class="badge badge-info">Brevet</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--text-muted);">Logiciel / algorithme</span><span class="badge badge-info">Droit d'auteur</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--text-muted);">Base de données</span><span class="badge badge-warning">Droit sui generis</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--text-muted);">Marque / nom</span><span class="badge badge-success">Marque déposée</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--text-muted);">Savoir-faire</span><span class="badge badge-danger">Secret + NDA</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Protections enregistrées -->
+    <div id="prot-saved-section" style="display:none;margin-top:1.5rem;">
+      <p style="font-size:12px;font-weight:600;color:var(--success);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">✓ Protections enregistrées</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Connaissance</th><th>Mode</th><th>Date de dépôt</th><th>N° dossier</th><th>Statut</th></tr></thead>
+          <tbody id="prot-saved-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ── SCRIPTS ──────────────────────────────────────────────────────────── -->
+<script type="module">
+  import { initEvaluation } from "./js/evaluation.js";
+  import { renderDashboard } from "./js/dashboard.js";
+  import { initProtection }  from "./js/protection.js";
+
+  // Navigation entre pages
+  window.showPage = function(id) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".nav-links a").forEach(a => a.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    document.getElementById("nav-" + id).classList.add("active");
+    if (id === "p2") renderDashboard();
+    if (id === "p3") initProtection();
+  };
+
+  // Initialisation
+  initEvaluation();
+</script>
+
+</body>
+</html>
