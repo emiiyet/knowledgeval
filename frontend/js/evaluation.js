@@ -76,13 +76,13 @@ async function handleExtract() {
   try {
     const data = await extractFromPDF(file);
     extracted = data.connaissances;
-  } } catch (err) {
+  } catch (err) {
     clearInterval(iv);
     hide("st-loading");
     show("file-info");
     toast("Erreur extraction : " + err.message);
-    return; // ← stopper ici, ne pas continuer avec des données fictives
-} finally {
+    return;
+  } finally {
     clearInterval(iv);
   }
 
