@@ -24,6 +24,8 @@
   --font-b: 'Inter', sans-serif;
   --r: 10px;
   --rs: 6px;
+  --k-card-bg: #E6F4ED;      /* vert clair pour les boxes */
+--k-card-color: #1A7A4A;   /* vert foncé pour le texte/cercles */
 }
 
 body { font-family: var(--font-b); background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
@@ -94,8 +96,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); backgro
 #drop-zone:hover { border-color: var(--accent); }
 
 /* ── KNOWLEDGE CARDS ─────────────────────────────────────────── */
-.k-card { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: border-color .15s; margin-bottom: 8px; }
-.k-card-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-family: var(--font-d); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.k-card { display: flex; align-items: center; gap: 12px; border-color: #B6DFCA; cursor: pointer; transition: border-color .15s; margin-bottom: 8px; }
+.k-card-num { width: 32px; height: 32px; border-radius: 50%; background: var(--k-card-bg); color: var(--k-card-color); font-family: var(--font-d); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .k-card-info { flex: 1; min-width: 0; }
 .k-card-info strong { font-size: 14px; font-weight: 500; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .k-card-info span { font-size: 12px; color: var(--text-muted); }
