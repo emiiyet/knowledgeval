@@ -1,4 +1,4 @@
-import { getAllKnowledges } from "./api.js";
+import { getAllKnowledges, deleteKnowledge } from "./api.js";
 
 const MAT_COLS  = { Commerciale: "var(--success)", Pilote: "var(--accent)", Prototype: "var(--warning)", Idée: "var(--danger)" };
 const MAT_BADGE = { Commerciale: "success", Pilote: "info", Prototype: "warning", Idée: "danger" };
@@ -8,7 +8,6 @@ export async function renderDashboard() {
   const loading = document.getElementById("dash-loading");
   const empty   = document.getElementById("dash-empty");
   const table   = document.getElementById("dash-table");
-
   loading.style.display = "block";
   empty.style.display   = "none";
   table.style.display   = "none";
@@ -25,7 +24,7 @@ export async function renderDashboard() {
 
   if (knowledges.length === 0) {
     empty.style.display = "block";
-    updateKPIs([], []);
+    updateKPIs([]);
     return;
   }
 
@@ -38,17 +37,15 @@ export async function renderDashboard() {
 function updateKPIs(knowledges) {
   const strong = knowledges.filter((k) => k.score > 20).length;
   let totalRev = 0, totalCost = 0;
-
   knowledges.forEach((k) => {
     const rev  = parseInt(k.rev_est);
     const cost = parseInt(k.cost_est);
     if (!isNaN(rev))  totalRev  += rev;
     if (!isNaN(cost)) totalCost += cost;
   });
-
-  document.getElementById("kpi-rev").textContent   = totalRev  ? totalRev.toLocaleString("fr-FR")  + " €" : "0 €";
-  document.getElementById("kpi-cost").textContent  = totalCost ? totalCost.toLocaleString("fr-FR") + " €" : "0 €";
-  document.getElementById("kpi-count").textContent = knowledges.length;
+  document.getElementById("kpi-rev").textContent    = totalRev  ? totalRev.toLocaleString("fr-FR")  + " €" : "0 €";
+  document.getElementById("kpi-cost").textContent   = totalCost ? totalCost.toLocaleString("fr-FR") + " €" : "0 €";
+  document.getElementById("kpi-count").textContent  = knowledges.length;
   document.getElementById("kpi-strong").textContent = strong;
 }
 
@@ -79,7 +76,21 @@ function renderTable(knowledges) {
           </div>
           <span class="badge badge-${matb}">${k.maturite}</span>
         </div>
+      </td>
+      <td>
+        <button class="btn" style="color:var(--danger);border-color:var(--danger);padding:4px 10px;font-size:12px;"
+          onclick="window._deleteKnowledge(${k.id})">✕ Supprimer</button>
       </td>`;
     tbody.appendChild(tr);
   });
 }
+
+window._deleteKnowledge = async function(id) {
+  if (!confirm("Supprimer cette connaissance ?")) return;
+  try {
+    await deleteKnowledge(id);
+    await renderDashboard();
+  } catch (err) {
+    console.error("Erreur suppression :", err);
+  }
+};
