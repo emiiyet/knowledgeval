@@ -1,7 +1,4 @@
-// ─── Configuration ───────────────────────────────────────────────────────────
 const API_URL = window.location.origin + "/api";
-
-// ─── Knowledges ──────────────────────────────────────────────────────────────
 
 export async function extractFromPDF(file) {
   const formData = new FormData();
@@ -11,7 +8,7 @@ export async function extractFromPDF(file) {
     body: formData,
   });
   if (!res.ok) throw new Error(await res.text());
-  return res.json(); // { connaissances: [...] }
+  return res.json();
 }
 
 export async function saveKnowledge(knowledge) {
@@ -27,10 +24,14 @@ export async function saveKnowledge(knowledge) {
 export async function getAllKnowledges() {
   const res = await fetch(`${API_URL}/knowledges/`);
   if (!res.ok) throw new Error(await res.text());
-  return res.json(); // { knowledges: [...] }
+  return res.json();
 }
 
-// ─── Protections ─────────────────────────────────────────────────────────────
+export async function deleteKnowledge(id) {
+  const res = await fetch(`${API_URL}/knowledges/${id}`, { method: "DELETE" });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
 
 export async function saveProtection(protection) {
   const res = await fetch(`${API_URL}/protections/`, {
@@ -45,7 +46,7 @@ export async function saveProtection(protection) {
 export async function getAllProtections() {
   const res = await fetch(`${API_URL}/protections/`);
   if (!res.ok) throw new Error(await res.text());
-  return res.json(); // { protections: [...] }
+  return res.json();
 }
 
 export async function updateProtection(id, updates) {
