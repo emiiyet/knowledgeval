@@ -35,10 +35,10 @@ nav {
   padding: 0 2rem; display: flex; align-items: center; gap: 2rem; height: 56px;
 }
 .nav-brand { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: #16a34a; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-.nav-brand span { color: var(--accent); }
+.nav-brand span { color: #16a34a; }
 .nav-links { display: flex; gap: 4px; }
-.nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border-radius: var(--rs); transition: background .15s, color .15s; cursor: pointer; }
-.nav-links a:hover, .nav-links a.active { background: var(--surface2); color: var(--text); }
+.nav-links a { font-size: 13px; color: #16a34a; text-decoration: none; padding: 5px 12px; border-radius: var(--rs); transition: background .15s, color .15s; cursor: pointer; }
+.nav-links a:hover, .nav-links a.active { background: var(--surface2); color: #16a34a; }
 
 /* ── HERO ─────────────────────────────────────────────────────── */
 .hero { padding: 3.5rem 2rem 2.5rem; max-width: 900px; margin: 0 auto; }
