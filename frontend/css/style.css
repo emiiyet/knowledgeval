@@ -2,7 +2,6 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-
 :root {
   --bg: #F7F6F2;
   --surface: #FFFFFF;
@@ -24,8 +23,6 @@
   --font-b: 'Inter', sans-serif;
   --r: 10px;
   --rs: 6px;
-  --k-card-bg: #E6F4ED;      /* vert clair pour les boxes */
---k-card-color: #1A7A4A;   /* vert foncé pour le texte/cercles */
 }
 
 body { font-family: var(--font-b); background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
@@ -37,20 +34,20 @@ nav {
   border-bottom: 1px solid var(--border);
   padding: 0 2rem; display: flex; align-items: center; gap: 2rem; height: 56px;
 }
-.nav-brand { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: #16a34a; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-.nav-brand span { color: #16a34a; }
+.nav-brand { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.nav-brand span { color: var(--accent); }
 .nav-links { display: flex; gap: 4px; }
-.nav-links a { font-size: 13px; color: black; text-decoration: none; padding: 5px 12px; border-radius: var(--rs); transition: background .15s, color .15s; cursor: pointer; }
-.nav-links a:hover, .nav-links a.active { background: var(--surface2); color: black; }
+.nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border-radius: var(--rs); transition: background .15s, color .15s; cursor: pointer; }
+.nav-links a:hover, .nav-links a.active { background: var(--surface2); color: var(--text); }
 
 /* ── HERO ─────────────────────────────────────────────────────── */
 .hero { padding: 3.5rem 2rem 2.5rem; max-width: 900px; margin: 0 auto; }
-.hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: #16a34a; background: var(--accent-light); border-radius: 20px; padding: 4px 12px; margin-bottom: 1.25rem; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border-radius: 20px; padding: 4px 12px; margin-bottom: 1.25rem; }
 .hero h1 { font-family: var(--font-d); font-size: clamp(26px, 5vw, 42px); font-weight: 700; line-height: 1.15; margin-bottom: .75rem; }
 .hero p { font-size: 15px; color: var(--text-muted); max-width: 540px; margin-bottom: 1.5rem; }
 .hero-steps { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
 .hero-step { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
-.hero-step .dot { width: 28px; height: 28px; border-radius: 50%; background: #16a34a; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.hero-step .dot { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .hero-arrow { color: var(--border); font-size: 18px; margin: 0 10px; }
 
 /* ── MAIN ─────────────────────────────────────────────────────── */
@@ -79,8 +76,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); backgro
 .btn:hover { background: var(--surface2); }
 .btn:active { transform: scale(.98); }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
-.btn-primary { background: #16a34a; color: #fff; border-color: #16a34a; }
-.btn-primary:hover { background: #16a34a; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: #2450CC; }
 .btn-full { width: 100%; justify-content: center; }
 
 /* ── BADGE ───────────────────────────────────────────────────── */
@@ -89,15 +86,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); backgro
 .badge-warning { background: var(--warning-bg); color: var(--warning); }
 .badge-danger  { background: var(--danger-bg);  color: var(--danger);  }
 .badge-info    { background: var(--info-bg);     color: var(--info);    }
-.badge-accent  { background: var(--accent-light); color: var(--accent); }
+.badge-accent  { background: var(--success-bg); color: var(--success); }
 
 /* ── DROP ZONE ───────────────────────────────────────────────── */
 #drop-zone { border: 2px dashed var(--border); border-radius: var(--r); padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; background: var(--surface); transition: border-color .2s; }
 #drop-zone:hover { border-color: var(--accent); }
 
 /* ── KNOWLEDGE CARDS ─────────────────────────────────────────── */
-.k-card { display: flex; align-items: center; gap: 12px; border-color: #B6DFCA; cursor: pointer; transition: border-color .15s; margin-bottom: 8px; }
-.k-card-num { width: 32px; height: 32px; border-radius: 50%; background: var(--k-card-bg); color: var(--k-card-color); font-family: var(--font-d); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.k-card { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: border-color .15s; margin-bottom: 8px; }
+.k-card-num { width: 32px; height: 32px; border-radius: 50%; background: var(--success-bg); color: var(--success); font-family: var(--font-d); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .k-card-info { flex: 1; min-width: 0; }
 .k-card-info strong { font-size: 14px; font-weight: 500; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .k-card-info span { font-size: 12px; color: var(--text-muted); }
@@ -109,8 +106,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); backgro
 .criterion-info span { font-size: 12px; color: var(--text-muted); }
 .stars { display: flex; gap: 5px; }
 .star { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all .12s; }
-.star:hover { border-color: var(--accent); color: var(--accent); }
-.star.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.star:hover { border-color: var(--success); color: var(--success); }
+.star.active { background: var(--success); border-color: var(--success); color: #fff; }
 
 /* ── SCORE BAR ───────────────────────────────────────────────── */
 .score-bar-wrap { background: var(--border); border-radius: 4px; height: 8px; overflow: hidden; margin: 8px 0; }
