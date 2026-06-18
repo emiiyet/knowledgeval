@@ -9,7 +9,7 @@
   --border: #E2E0D8;
   --text: #1A1916;
   --text-muted: #6B6960;
-  --accent: #008000;
+  --accent: #16a34a;
   --accent-light: #CCFFCC;
   --success: #1A7A4A;
   --success-bg: #E6F4ED;
@@ -34,7 +34,7 @@ nav {
   border-bottom: 1px solid var(--border);
   padding: 0 2rem; display: flex; align-items: center; gap: 2rem; height: 56px;
 }
-.nav-brand { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.nav-brand { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: #008000; text-decoration: none; display: flex; align-items: center; gap: 8px; }
 .nav-brand span { color: var(--accent); }
 .nav-links { display: flex; gap: 4px; }
 .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border-radius: var(--rs); transition: background .15s, color .15s; cursor: pointer; }
@@ -42,7 +42,7 @@ nav {
 
 /* ── HERO ─────────────────────────────────────────────────────── */
 .hero { padding: 3.5rem 2rem 2.5rem; max-width: 900px; margin: 0 auto; }
-.hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); border-radius: 20px; padding: 4px 12px; margin-bottom: 1.25rem; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: #16a34a; background: var(--accent-light); border-radius: 20px; padding: 4px 12px; margin-bottom: 1.25rem; }
 .hero h1 { font-family: var(--font-d); font-size: clamp(26px, 5vw, 42px); font-weight: 700; line-height: 1.15; margin-bottom: .75rem; }
 .hero p { font-size: 15px; color: var(--text-muted); max-width: 540px; margin-bottom: 1.5rem; }
 .hero-steps { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
