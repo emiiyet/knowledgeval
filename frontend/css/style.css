@@ -34,8 +34,8 @@ nav {
   border-bottom: 1px solid var(--border);
   padding: 0 2rem; display: flex; align-items: center; gap: 2rem; height: 56px;
 }
-.nav-brand { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: #008000; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-.nav-brand span { color: var(--accent); }
+.nav-brand { font-family: #16a34a; font-size: 16px; font-weight: 700; color: #008000; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.nav-brand span { color: #16a34a); }
 .nav-links { display: flex; gap: 4px; }
 .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; padding: 5px 12px; border-radius: var(--rs); transition: background .15s, color .15s; cursor: pointer; }
 .nav-links a:hover, .nav-links a.active { background: var(--surface2); color: var(--text); }
@@ -76,8 +76,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); backgro
 .btn:hover { background: var(--surface2); }
 .btn:active { transform: scale(.98); }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
-.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-.btn-primary:hover { background: #2450CC; }
+.btn-primary { background:#16a34a; color: #fff; border-color: #16a34a; }
+.btn-primary:hover { background: #16a34a; }
 .btn-full { width: 100%; justify-content: center; }
 
 /* ── BADGE ───────────────────────────────────────────────────── */
