@@ -47,7 +47,7 @@ nav {
 .hero p { font-size: 15px; color: var(--text-muted); max-width: 540px; margin-bottom: 1.5rem; }
 .hero-steps { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
 .hero-step { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
-.hero-step .dot { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.hero-step .dot { width: 28px; height: 28px; border-radius: 50%; background: :#16a34a; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .hero-arrow { color: var(--border); font-size: 18px; margin: 0 10px; }
 
 /* ── MAIN ─────────────────────────────────────────────────────── */
