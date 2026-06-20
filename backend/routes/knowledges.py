@@ -1,20 +1,20 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel
-from db import supabase
-from services.claude import extraire_connaissances
+from typing import Optional
+import uuid
+from db import supabase, PDF_BUCKET
+from services.claude import analyser_document
 
 router = APIRouter()
 
 
-# ── Schémas ────────────────────────────────────────────────────────────────
-
 class ScoresDetail(BaseModel):
-    c1: int  # Valeur économique
-    c2: int  # Potentiel de marché
-    c3: int  # Avantage concurrentiel
-    c4: int  # Protégeabilité
-    c5: int  # Facilité de transfert
-    c6: int  # Risque juridique
+    c1: int
+    c2: int
+    c3: int
+    c4: int
+    c5: int
+    c6: int
 
 
 class KnowledgeCreate(BaseModel):
@@ -30,12 +30,10 @@ class KnowledgeCreate(BaseModel):
     delai: str = "—"
     statut_jur: str = "Non protégée"
     maturite: str = "Idée"
+    fichier_url: Optional[str] = None   # ← nouveau
 
-
-# ── Helpers ─────────────────────────────────────────────────────────────────
 
 def calculer_meta(score: int) -> dict:
-    """Calcule revenus estimés, coûts, délai et maturité selon le score."""
     if score > 20:
         return {
             "decision": "Protéger & commercialiser",
@@ -65,30 +63,47 @@ def calculer_meta(score: int) -> dict:
         }
 
 
-# ── Endpoints ────────────────────────────────────────────────────────────────
-
-@router.post("/extract")
-async def extract_from_pdf(file: UploadFile = File(...)):
+@router.post("/extract-document")
+async def extract_document(file: UploadFile = File(...)):
     """
-    Reçoit un fichier PDF, l'envoie à Claude et retourne
-    les connaissances extraites (sans les sauvegarder).
+    Reçoit un PDF, le traite comme UNE connaissance unique :
+    - titre = nom du fichier
+    - description/type/domaine = générés par IA
+    - le PDF est stocké dans Supabase Storage
     """
     if file.content_type != "application/pdf":
         raise HTTPException(status_code=400, detail="Le fichier doit être un PDF.")
 
     pdf_bytes = await file.read()
+    titre = file.filename.rsplit(".", 1)[0]
 
     try:
-        connaissances = extraire_connaissances(pdf_bytes)
+        analyse = analyser_document(pdf_bytes)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erreur extraction Claude : {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur analyse : {str(e)}")
 
-    return {"connaissances": connaissances}
+    chemin_stockage = f"{uuid.uuid4()}_{file.filename}"
+    try:
+        supabase.storage.from_(PDF_BUCKET).upload(
+            chemin_stockage,
+            pdf_bytes,
+            {"content-type": "application/pdf"}
+        )
+        fichier_url = supabase.storage.from_(PDF_BUCKET).get_public_url(chemin_stockage)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erreur stockage PDF : {str(e)}")
+
+    return {
+        "titre": titre,
+        "description": analyse.get("description", ""),
+        "type": analyse.get("type", "donnee"),
+        "domaine": analyse.get("domaine", "—"),
+        "fichier_url": fichier_url,
+    }
 
 
 @router.post("/save")
 async def save_knowledge(knowledge: KnowledgeCreate):
-    """Sauvegarde une connaissance évaluée dans Supabase."""
     score = knowledge.score
     meta = calculer_meta(score)
 
@@ -105,6 +120,7 @@ async def save_knowledge(knowledge: KnowledgeCreate):
         "delai": meta["delai"],
         "statut_jur": meta["statut_jur"],
         "maturite": meta["maturite"],
+        "fichier_url": knowledge.fichier_url,   # ← nouveau
     }
 
     try:
@@ -117,35 +133,28 @@ async def save_knowledge(knowledge: KnowledgeCreate):
 
 @router.get("/")
 async def get_all_knowledges():
-    """Retourne toutes les connaissances stockées, triées par score décroissant."""
     try:
         result = supabase.table("knowledges").select("*").order("score", desc=True).execute()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur Supabase : {str(e)}")
-
     return {"knowledges": result.data}
 
 
 @router.get("/{knowledge_id}")
 async def get_knowledge(knowledge_id: int):
-    """Retourne une connaissance par son ID."""
     try:
         result = supabase.table("knowledges").select("*").eq("id", knowledge_id).execute()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur Supabase : {str(e)}")
-
     if not result.data:
         raise HTTPException(status_code=404, detail="Connaissance introuvable.")
-
     return result.data[0]
 
 
 @router.delete("/{knowledge_id}")
 async def delete_knowledge(knowledge_id: int):
-    """Supprime une connaissance par son ID."""
     try:
         supabase.table("knowledges").delete().eq("id", knowledge_id).execute()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur Supabase : {str(e)}")
-
     return {"message": "Connaissance supprimée."}
