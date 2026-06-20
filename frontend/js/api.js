@@ -1,9 +1,9 @@
 const API_URL = window.location.origin + "/api";
 
-export async function extractFromPDF(file) {
+export async function extractDocument(file) {
   const formData = new FormData();
   formData.append("file", file);
-  const res = await fetch(`${API_URL}/knowledges/extract`, {
+  const res = await fetch(`${API_URL}/knowledges/extract-document`, {
     method: "POST",
     body: formData,
   });
